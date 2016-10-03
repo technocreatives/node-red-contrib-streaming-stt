@@ -2,7 +2,7 @@ module.exports = function(RED) {
   'use strict';
 
   var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
-  var Mic = require('node-microphone');
+  var Mic = require('./microphone.js');
 
   function Sttws(config) {
     RED.nodes.createNode(this, config);

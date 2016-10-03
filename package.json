@@ -24,13 +24,12 @@
     }
   },
   "author": "magnus@spanggard.se",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/technocreatives/tbd/issues"
   },
   "homepage": "https://github.com/technocreatives/tbd#readme",
   "dependencies": {
-    "node-microphone": "latest",
     "watson-developer-cloud": "latest"
   }
 }
