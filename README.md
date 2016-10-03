@@ -15,4 +15,4 @@ You will need to register an <a href ="http://www.ibm.com/cloud-computing/bluemi
 Acknowledgements
 ==============================
 
-Uses a modified version of <a href="https://github.com/MexXxo/node-microphone" target="_new">microphone lib</a>. Added it as code instead of a dependency due to a bug that made the lib not work in macOS.
+Uses a modified version of <a href="https://github.com/MexXxo/node-microphone" target="_new">node-microphone</a>. Added it as code instead of a dependency due to a bug that made the lib not work in macOS.
