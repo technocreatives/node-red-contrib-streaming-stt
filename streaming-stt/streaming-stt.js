@@ -2,9 +2,9 @@ module.exports = function(RED) {
   'use strict';
 
   var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
-  var Mic = require('node-microphone');
+  var Mic = require('./microphone.js');
 
-  function Sttws(config) {
+  function StreamingStt(config) {
     RED.nodes.createNode(this, config);
     var node = this;
 
@@ -50,18 +50,20 @@ module.exports = function(RED) {
             node.send([msg,null]);
           }).on('listening',function(){
             node.status({fill:'green',shape:'ring',text:'listening'});
-            node.send([null,{payload:true}]);
+            node.send([null,{payload:'LISTENING'}]);
           }).on('connect', function(){
             node.status({fill:'green',shape:'dot',text:'connected'});
+            node.send([null,{payload:'CONNECTED'}]);
           }).on('close', function(reasonCode, description){
             node.log('Closed with code '+reasonCode+', '+description);
             node.status({fill:'yellow',shape:'dot',text:'closed'});
-            
-            node.send([null,{payload:false}]);
+            node.send([null,{payload:'CLOSED'}]);
           }).on('error', function(err){
             node.status({fill:'red',shape:'dot',text:'error'});
+            node.send([null,{payload:'ERROR'}]);
           }).on('stopping', function(){
             node.status({fill:'yellow',shape:'ring',text:'stopping'});
+            node.send([null,{payload:'STOPPING'}]);
           });
 
           // pipe your recorded voice to watson sttws
@@ -75,7 +77,7 @@ module.exports = function(RED) {
 
   }
 
-  RED.nodes.registerType('sttws', Sttws,{
+  RED.nodes.registerType('streaming-stt', StreamingStt,{
     credentials: {
       username: {type: 'text'},
       password: {type: 'password'}
