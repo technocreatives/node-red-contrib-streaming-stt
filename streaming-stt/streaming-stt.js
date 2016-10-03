@@ -50,18 +50,20 @@ module.exports = function(RED) {
             node.send([msg,null]);
           }).on('listening',function(){
             node.status({fill:'green',shape:'ring',text:'listening'});
-            node.send([null,{payload:true}]);
+            node.send([null,{payload:'LISTENING'}]);
           }).on('connect', function(){
             node.status({fill:'green',shape:'dot',text:'connected'});
+            node.send([null,{payload:'CONNECTED'}]);
           }).on('close', function(reasonCode, description){
             node.log('Closed with code '+reasonCode+', '+description);
             node.status({fill:'yellow',shape:'dot',text:'closed'});
-            
-            node.send([null,{payload:false}]);
+            node.send([null,{payload:'CLOSED'}]);
           }).on('error', function(err){
             node.status({fill:'red',shape:'dot',text:'error'});
+            node.send([null,{payload:'ERROR'}]);
           }).on('stopping', function(){
             node.status({fill:'yellow',shape:'ring',text:'stopping'});
+            node.send([null,{payload:'STOPPING'}]);
           });
 
           // pipe your recorded voice to watson sttws

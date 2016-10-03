@@ -16,7 +16,15 @@
 
 <script type="text/x-red" data-help-name="streaming-stt">
   <p>Listens for voice input from the mic and translates into text.</p>
-  <p>Outputs an object called <b>msg</b> containing the property <b>msg.payload</b> and <b>msg.transciption</b></p>
+  <p>On the first output it sends an object called <b>msg</b> containing the property <b>msg.payload</b> and <b>msg.transciption</b>. On the second output it send a string as the status on <b>msg.payload</b>. The available strings are:
+  <ul>
+    <li>LISTENING</li>
+    <li>CONNECTED</li>
+    <li>CLOSED</li>
+    <li>ERROR</li>
+    <li>STOPPING</li>
+  </ul>
+  </p>
   <p>To start listening for voice and transcribe the node needs an input of <b>true</b> on <b>msg.payload</b>. Likewise if this property is set to <b>false</b> it will stop listening.</p>
 </script>
 
