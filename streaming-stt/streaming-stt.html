@@ -1,6 +1,6 @@
 
 <!-- STTWS -->
-<script type="text/x-red" data-template-name="sttws">
+<script type="text/x-red" data-template-name="streaming-stt">
   <div class="form-row">
     <label for="node-input"><i class="fa fa-globe"></i> Credentials</label>
   </div>
@@ -14,14 +14,14 @@
  </div>
 </script>
 
-<script type="text/x-red" data-help-name="sttws">
+<script type="text/x-red" data-help-name="streaming-stt">
   <p>Listens for voice input from the mic and translates into text.</p>
   <p>Outputs an object called <b>msg</b> containing the property <b>msg.payload</b> and <b>msg.transciption</b></p>
   <p>To start listening for voice and transcribe the node needs an input of <b>true</b> on <b>msg.payload</b>. Likewise if this property is set to <b>false</b> it will stop listening.</p>
 </script>
 
 <script type="text/javascript">
-  RED.nodes.registerType('sttws',{
+  RED.nodes.registerType('streaming-stt',{
     category: 'output',
     color: '#61A7FF',
     defaults: {
@@ -35,7 +35,7 @@
     outputs:2,
     icon: "mic.png",
     label: function() {
-      return this.name||"sttws";
+      return this.name||"streaming-stt";
     }
   });
 </script>

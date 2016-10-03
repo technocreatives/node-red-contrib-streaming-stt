@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-sttws",
+  "name": "node-red-contrib-streaming-stt",
   "version": "1.0.0",
   "description": "Node RED Node for IBM Watsons Speech To Text Streaming api over websocket",
   "main": "index.js",
@@ -20,7 +20,7 @@
   ],
   "node-red": {
     "nodes": {
-      "sttws": "sttws/sttws.js"
+      "streaming-stt": "streaming-stt/streaming-stt.js"
     }
   },
   "author": "magnus@spanggard.se",
@@ -30,6 +30,6 @@
   },
   "homepage": "https://github.com/technocreatives/tbd#readme",
   "dependencies": {
-    "watson-developer-cloud": "latest"
+    "watson-developer-cloud": "2.4.5"
   }
 }

@@ -4,7 +4,7 @@ module.exports = function(RED) {
   var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
   var Mic = require('./microphone.js');
 
-  function Sttws(config) {
+  function StreamingStt(config) {
     RED.nodes.createNode(this, config);
     var node = this;
 
@@ -75,7 +75,7 @@ module.exports = function(RED) {
 
   }
 
-  RED.nodes.registerType('sttws', Sttws,{
+  RED.nodes.registerType('streaming-stt', StreamingStt,{
     credentials: {
       username: {type: 'text'},
       password: {type: 'password'}
