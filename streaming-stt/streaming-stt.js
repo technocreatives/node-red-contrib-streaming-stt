@@ -6,12 +6,15 @@ module.exports = function(RED) {
 
   function StreamingStt(config) {
     RED.nodes.createNode(this, config);
+    this.cmd = config.cmd;
     var node = this;
 
     var username = this.credentials.username;
     var password = this.credentials.password;
 
-    var mic = new Mic();
+    var micOption = {};
+    micOption.command = node.cmd;
+    var mic = new Mic(micOption);
     var speech_to_text= new SpeechToTextV1({
             username: username,
             password: password
