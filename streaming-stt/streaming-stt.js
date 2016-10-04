@@ -21,6 +21,7 @@ module.exports = function(RED) {
           });
     var voice = null;
     var watson = null;
+    var listening = false;
 
     this.on('input', function(msg) {
       var requestToListen = msg.payload;
@@ -30,20 +31,35 @@ module.exports = function(RED) {
         return;
       }
 
-      if (voice !== null && requestToListen) {
+      if (listening && requestToListen) {
         node.warn('Speech node is already listening, stop before starting a new connection.', msg);
         return;
       }
+
       switch(requestToListen) {
         case false: {
+          // stop listening
           mic.stopRecording();
           voice = null;
-          if (watson === null)
+          if (watson === null) {
+            node.warn('There is no connectio to watson that we can stop.');
             return;
+          }
+          // we aren't listening or are in the process of shuting down our ears.
+          if (!listening) {
+            node.warn('You need to start a session before you can stop it.');
+            return;
+          }
           watson.stop();
         }
         return;
         case true: {
+          // start listening
+          // we are already listeing.
+          if(listening)
+            return;
+
+          listening = true;
           node.status({fill:'yellow',shape:'ring',text:'requesting'});
           voice = mic.startRecording();
           watson = speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100' });
@@ -58,10 +74,12 @@ module.exports = function(RED) {
             node.status({fill:'green',shape:'dot',text:'connected'});
             node.send([null,{payload:'CONNECTED'}]);
           }).on('close', function(reasonCode, description){
+            listening = false;
             node.log('Closed with code '+reasonCode+', '+description);
             node.status({fill:'yellow',shape:'dot',text:'closed'});
             node.send([null,{payload:'CLOSED'}]);
           }).on('error', function(err){
+            listening = false;
             node.status({fill:'red',shape:'dot',text:'error'});
             node.send([null,{payload:'ERROR'}]);
           }).on('stopping', function(){
