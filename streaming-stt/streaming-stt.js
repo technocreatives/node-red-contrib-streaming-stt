@@ -56,8 +56,10 @@ module.exports = function(RED) {
         case true: {
           // start listening
           // we are already listeing.
-          if(listening)
+          if(listening) {
+            node.warn('We are already listening.');
             return;
+          }
 
           listening = true;
           node.status({fill:'yellow',shape:'ring',text:'requesting'});
