@@ -15,6 +15,7 @@ class Microphone extends EventEmitter {
         this.encoding = options.encoding || 'signed-integer';
         this.rate = options.rate || '16000';
         this.channels = options.channels || '1';
+        this.command = options.command || '';
 
         if (!isWin && !isMac) {
             this.device = options.device || 'plughw:1,0';
@@ -40,7 +41,13 @@ class Microphone extends EventEmitter {
 
     startRecording() {
         if (this.ps === null) {
-            if (isWin) {         
+            if (this.command !== '') {
+                var parts = this.command.split(' ');
+                var cmd = parts[0];
+                var args = parts.slice(1);
+                console.log('Running custom command '+cmd+' ['+args+']');
+                this.ps = spawn(cmd, args);
+            } else if (isWin) {
                 this.ps = spawn('sox', ['-b', this.bitwidth, '--endian', this.endian, '-c', this.channels, '-r', this.rate, '-e', this.encoding, '-t', 'waveaudio', 'default', '-p']);
             } else if (isMac) {
                 this.ps = spawn('rec', ['-q', '-b', this.bitwidth, '-c', this.channels, '-r', this.rate, '-e', this.encoding, '-t', 'wav', '-']);  
