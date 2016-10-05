@@ -85,6 +85,7 @@ module.exports = function(RED) {
             node.status({fill:'red',shape:'dot',text:'error'});
             node.send([null,{payload:'ERROR'}]);
           }).on('stopping', function(){
+            listening = false;
             node.status({fill:'yellow',shape:'ring',text:'stopping'});
             node.send([null,{payload:'STOPPING'}]);
           });
@@ -96,6 +97,14 @@ module.exports = function(RED) {
         default:
         return;
       }
+    });
+
+    this.on('close', function(){
+      // if we aren't listening we have nothing to clean up
+      if (!listening)
+        return;
+        mic.stopRecording();
+        watson.stop();
     });
 
   }
